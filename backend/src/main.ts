@@ -4,8 +4,10 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { RedisIoAdapter } from './chat/redis-io.adapter';
+import { assertEnv } from './config/env';
 
 async function bootstrap() {
+  assertEnv();
   // rawBody is needed to verify Paystack webhook signatures
   const app = await NestFactory.create(AppModule, { rawBody: true });
   app.setGlobalPrefix('v1');

@@ -6,7 +6,7 @@ NestJS (TypeScript) · PostgreSQL + PostGIS · Redis · Socket.IO · BullMQ · D
 ## Run locally
 
 ```bash
-cp .env.example .env            # fill in secrets
+cp .env.example .env            # fill in your keys - .env is git-ignored, never commit it
 docker compose up -d postgres redis
 npm install
 npm run db:migrate              # creates all tables (+ PostGIS)
@@ -16,6 +16,10 @@ npm test                        # business-rule tests
 ```
 
 Production: `docker build .` · run `drizzle/sql/partition_swipes.sql` once before launch to partition swipes by month (a monthly job then creates each new partition).
+
+## Keys and secrets
+
+Every API key, password and secret is read from `.env` only. `.env` is git-ignored; `.env.example` lists the names with empty values. The API refuses to start if a required key is missing (all provider keys are required when `NODE_ENV=production`). JWT secret and identity salt must be 32+ characters. In production, set these as secrets in your hosting platform rather than shipping a `.env` file.
 
 ## What's built (Version 1 plan)
 
